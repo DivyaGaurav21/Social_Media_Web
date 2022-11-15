@@ -11,5 +11,6 @@ const homeController = require('../controllers/home-controller');
 console.log('Router is Loaded');
 
 router.get('/' , homeController.home);
+router.get('/profile' , homeController.profile);
 
 module.exports = router;

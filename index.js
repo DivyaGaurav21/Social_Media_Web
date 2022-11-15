@@ -2,10 +2,17 @@ const express = require('express');
 const port = 8000;
 const app = express();
 
+//express ejs layout
+const expressLayouts = require('express-ejs-layouts');
+app.use(expressLayouts);
+
 //middleware for express router
 app.use('/' , require('./routers/index'));
 
-
+//setting view engine as ejs
+app.set('view engine' , 'ejs');
+//setting path for view directory
+app.set('views' , './views');
 
 
 
