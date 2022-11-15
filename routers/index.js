@@ -5,13 +5,13 @@ const express = require('express');
 const router = express.Router();
 
 //controller for routing
-const homeController = require('../controllers/home-controller');
+const homeController = require('../controllers/home_controller');
 
 
 //check whether router is loaded or not
 console.log('Router is Loaded');
 
 router.get('/' , homeController.home);
-router.get('/profile' , homeController.profile);
+router.use('/users' , require('./users'));
 
 module.exports = router;
