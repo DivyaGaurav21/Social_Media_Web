@@ -7,6 +7,7 @@ const router = express.Router();
 //controller for routing
 const homeController = require('../controllers/home-controller');
 
+
 //check whether router is loaded or not
 console.log('Router is Loaded');
 
