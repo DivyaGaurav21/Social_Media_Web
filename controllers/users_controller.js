@@ -1,25 +1,10 @@
 //import model of db
 const User = require('../models/user');
 
-module.exports.profile = (req, res) => {
-    if(req.cookies.user_id){
-    User.findById(req.cookies.user_id , (err , user) => {
-        if(err){console.log('error in finding cookie'); return}
-        if(user){
-            return res.render('user_profile', {
-                title: "profile",
-                User : user
-            })
-        }else{
-            return res.redirect('/users/sign-in')
-        }
-    })
-     }
-    }
 
 //render the sign up page
 module.exports.signUp = (req, res) => {
-    return res.render('user_sign_Up', {
+    return res.render('user_sign_up', {
         title: "Social | Sign Up"
     })
 }
@@ -29,6 +14,26 @@ module.exports.signIn = (req, res) => {
         title: "Social | Sign In"
     })
 }
+
+module.exports.profile = (req, res) => {
+    if(req.cookies.user_id){
+    User.findById(req.cookies.user_id , (err , user) => {
+        if(err){console.log('error in finding cookie'); return}
+        if (user) {
+            // console.log(user)
+            return res.render('user_profile', { 
+                title: "profile",
+                User : user
+            })
+        }else{
+            return res.redirect('/users/sign-in')
+        }
+    })
+    }else{
+        return res.redirect('/users/sign-in')
+    } 
+ }
+
 
 //get the sign up data
 module.exports.create = (req, res) => {
