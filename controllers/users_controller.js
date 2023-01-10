@@ -1,30 +1,28 @@
 //import model of db
+const passport = require('passport');
 const User = require('../models/user');
 
+
 module.exports.profile = (req, res) => {
-    if(req.cookies.user_id){
-    User.findById(req.cookies.user_id , (err , user) => {
-        if(err){console.log('error in finding cookie'); return}
-        if(user){
-            return res.render('user_profile', {
-                title: "profile",
-                User : user
-            })
-        }else{
-            return res.redirect('/users/sign-in')
-        }
+    res.render('user_profile', {
+        title : 'profile | page'
     })
-     }
     }
 
 //render the sign up page
 module.exports.signUp = (req, res) => {
+    if (req.isAuthenticated()) {
+        return res.redirect('/users/profile')    
+    }
     return res.render('user_sign_Up', {
         title: "Social | Sign Up"
     })
 }
 //render the sign in page
 module.exports.signIn = (req, res) => {
+    if (req.isAuthenticated()) {
+        return res.redirect('/users/profile')
+    }
     return res.render('user_sign_in', {
         title: "Social | Sign In"
     })
@@ -49,26 +47,21 @@ module.exports.create = (req, res) => {
 
 }
 
+
 //sign in and create a session for user
 module.exports.createSession = (req, res) => {
-    //steps for authenticate
-    //find the User
-    User.findOne({ email: req.body.email }, (err, user) => {
-        if (err) { console.log('error is finding user for sign in'); return }
-        //handle user found
-        if (user) {
-            //handle password which doesnot match
-            if (user.password != req.body.password) {
-                return res.redirect('back');
-            } else {
-                //handle session creation
-                res.cookie('user_id' , user.id);
-                return res.redirect('/users/profile')
-            }
-        } else {
-            //handle user not found
-            return res.redirect('back');
+    return res.redirect('/');
+}
 
+
+
+//action for sign-out
+module.exports.signOut = (req, res, done) => {
+    // console.log(req.logout())
+    req.logout(function (err) {
+        if (err) {
+            return done(err);
         }
+        return res.redirect('/')
     })
 }

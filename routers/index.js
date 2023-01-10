@@ -13,6 +13,6 @@ console.log('Router is Loaded');
 
 router.get('/' , homeController.home);
 router.use('/users' , require('./users'));
-router.use('/posts' , require('./Posts'));
+// router.use('/posts' , require('./Posts'));
 
 module.exports = router;
