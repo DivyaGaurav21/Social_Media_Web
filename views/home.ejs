@@ -1,15 +1,40 @@
 
-       <h1> Social Media :: home Page</h1>
+       <h1> Social Media :: <%= title %> Page</h1>
+       
 
     
-       <!-- <section id="feed-posts">
-        <h4>Posts</h4>
+       <section id="feed-posts">
+        <h3>POST</h3>
+
+     <% if(locals.user){%>
+           <h4>Create your post </h4>
         <form action="/posts/create" method="POST" id="new-post-form">
-            <textarea name="content" id="" cols="30" rows="4">post here..</textarea>
+            <textarea name="content" id="" cols="38" rows="10" placeholder="post here.."></textarea>
             <input type="submit" value="Post">
         </form>
-       </section> -->
+        <%}%>
 
-        <h1>
-            Codeial / <%= title %>
-        </h1>
+    <div class="post-container">
+        <ul>
+            <% for(let post of posts){ %>
+              <li>
+                <small style="background-color: blue; color: #fff; padding: 2px 5px;">
+                <%= post.user.name %>
+              </small> 
+                <span style="font-size: 30px; color: rgb(255, 0, 234);"><%= post.content %></span>
+              </li> 
+              <div class="post-comments">
+                   <% if(locals.user){%>
+                       <input type="text" name="content" placeholder="comment here">
+                       <input type="hidden" name="post" value="<%= post._id %>">
+                       <input type="submit" value="Add Comment">
+                    <%}%>
+              </div>
+                <%}%>
+        </ul>
+    </div>
+
+   
+
+       </section>
+
